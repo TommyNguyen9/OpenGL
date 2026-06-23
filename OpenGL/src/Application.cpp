@@ -121,12 +121,12 @@ int main(void)
 	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
 	if (!window)
 	{
-		GLCall(glfwTerminate());
+		glfwTerminate();
 		return -1;
 	}
 
 	/* Make window's context current*/
-	GLCall(glfwMakeContextCurrent(window));
+	glfwMakeContextCurrent(window);
 
 	if (glewInit() != GLEW_OK)
 		std::cout << "Error!" << std::endl;
@@ -165,25 +165,29 @@ int main(void)
 	unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
 	GLCall(glUseProgram(shader));
 
+	GLCall(int location = glGetUniformLocation(shader, "u_Color"));
+	ASSERT(location != -1);
+	GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
+
 	/* Loop until user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr));
+		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 	
 		
 		/* Swap front & back buffers */
-		GLCall(glfwSwapBuffers(window));
+		glfwSwapBuffers(window);
 
 		/* Poll for & process events */
-		GLCall(glfwPollEvents());
+		glfwPollEvents();
 	}
 
 	GLCall(glDeleteProgram(shader));
 
-	GLCall(glfwTerminate());
+	glfwTerminate();
 	return 0;
 
 }
