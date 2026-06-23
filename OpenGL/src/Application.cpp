@@ -179,6 +179,7 @@ int main(void)
 	ASSERT(location != -1);
 	GLCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
 
+	GLCall(glBindVertexArray(0));
 	GLCall(glUseProgram(0));
 	GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
@@ -195,8 +196,8 @@ int main(void)
 		GLCall(glUseProgram(shader));
 		GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
 
+		GLCall(glBindVertexArray(vao));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-
 
 		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 		
