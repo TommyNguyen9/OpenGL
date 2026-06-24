@@ -56,7 +56,7 @@ static unsigned int CompileShader(unsigned int type, const std::string& source)
 
 	int result;
 	GLCall(glGetShaderiv(id, GL_COMPILE_STATUS, &result));
-	if (result == GL_FALSE)
+	if (result == GL_FALSE) // test
 	{
 		int length;
 		GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
