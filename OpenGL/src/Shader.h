@@ -2,6 +2,13 @@
 
 #include <string>
 
+struct ShaderProgramSource
+{
+	std::string VertexSource;
+	std::string FragmentSource;
+};
+
+
 class Shader
 {
 private:
@@ -18,7 +25,9 @@ public:
 	// Set uniforms:
 	void SetUniform4f(const std::string& name, float v0, float v1, float f2, float f3);
 private:
-	bool CompileShader();
-	unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
+	ShaderProgramSource ParseShader(const std::string& filepath);
+	unsigned int CompileShader(unsigned int type, const std::string &source);
+	unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
+
 	unsigned int GetUniformLocation(const std::string& name);
 };
