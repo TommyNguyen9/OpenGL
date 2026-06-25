@@ -10,6 +10,7 @@
 #include "VertexBuffer.h"
 #include "indexBuffer.h"
 #include "VertexArray.h"
+#include "Shader.h"
 
 int main(void)
 {
@@ -70,18 +71,14 @@ int main(void)
 		IndexBuffer ib(indices, 6);
 		unsigned int ibo;
 
-		ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
-		unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
-		GLCall(glUseProgram(shader));
+		Shader shader("res/shaders/Basic.shader");
+		shader.Bind();
+		shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
-		GLCall(int location = glGetUniformLocation(shader, "u_Color"));
-		ASSERT(location != -1);
-		GLCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
-
-		GLCall(glBindVertexArray(0));
-		GLCall(glUseProgram(0));
-		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+		va.Unbind();
+		vb.Unbind();
+		ib.Unbind();
+		shader.Unbind();
 
 		float r = 0.0f;
 		float increment = 0.05f;
@@ -92,9 +89,9 @@ int main(void)
 			/* Render here */
 			GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-			GLCall(glUseProgram(shader));
-			GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
-
+			shader.Bind();
+			shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
+		
 			va.Bind();
 			ib.Bind();
 
@@ -114,7 +111,6 @@ int main(void)
 			glfwPollEvents();
 		}
 
-		GLCall(glDeleteProgram(shader));
 	}
 
 	glfwTerminate();
