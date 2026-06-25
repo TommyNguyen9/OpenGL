@@ -19,5 +19,6 @@ public:
 	void SetUniform4f(const std::string& name, float v0, float v1, float f2, float f3);
 private:
 	bool CompileShader();
+	unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
 	unsigned int GetUniformLocation(const std::string& name);
 };

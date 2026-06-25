@@ -1,7 +1,14 @@
 #include "Shader.h"
 #include <GL/Glew.h>
 #include <GLFW/glfw3.h>
-#include "Application.cpp"
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+
+#include "Renderer.h"
 
 Shader::Shader(const std::string& filepath)
 	: m_FilePath(filepath), m_RendererID(0)
@@ -25,7 +32,7 @@ struct ShaderProgramSource
 	std::string FragmentSource;
 };
 
-static ShaderProgramSource ParseShader(const std::string& filepath)
+ShaderProgramSource Shader::ParseShader(const std::string& filepath)
 {
 	std::ifstream stream(filepath);
 
@@ -57,7 +64,7 @@ static ShaderProgramSource ParseShader(const std::string& filepath)
 }
 
 
-static unsigned int CompileShader(unsigned int type, const std::string& source)
+unsigned int CompileShader(unsigned int type, const std::string& source)
 {
 	unsigned int id = glCreateShader(type);
 	const char* src = source.c_str();
@@ -83,7 +90,7 @@ static unsigned int CompileShader(unsigned int type, const std::string& source)
 	return id;
 }
 
-static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
+unsigned int Shader::CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
 	GLCall(unsigned int program = glCreateProgram());
 	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
