@@ -60,9 +60,9 @@ int main(void)
 			2, 3, 0
 		};
 
-		//unsigned int vao;
-		//GLCall(glGenVertexArrays(1, &vao));
-		//GLCall(glBindVertexArray(vao));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+		GLCall(glEnable(GL_BLEND));
+
 
 		VertexArray va;
 		VertexBuffer vb(positions, 4 * 4 * sizeof(float));
