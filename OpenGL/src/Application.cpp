@@ -13,6 +13,7 @@
 #include "Shader.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
+#include <filesystem>
 
 int main(void)
 {
@@ -59,9 +60,9 @@ int main(void)
 			2, 3, 0
 		};
 
-		unsigned int vao;
-		GLCall(glGenVertexArrays(1, &vao));
-		GLCall(glBindVertexArray(vao));
+		//unsigned int vao;
+		//GLCall(glGenVertexArrays(1, &vao));
+		//GLCall(glBindVertexArray(vao));
 
 		VertexArray va;
 		VertexBuffer vb(positions, 4 * 4 * sizeof(float));
@@ -78,7 +79,9 @@ int main(void)
 		shader.Bind();
 		shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
-		Texture texture("res/textures/Cherno.png");
+		std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
+
+		Texture texture("../res/textures/Cherno.png");
 		texture.Bind();
 		shader.SetUniform1i("u_Texture", 0);
 
