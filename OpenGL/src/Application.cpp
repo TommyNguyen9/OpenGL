@@ -63,7 +63,6 @@ int main(void)
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		GLCall(glEnable(GL_BLEND));
 
-
 		VertexArray va;
 		VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
