@@ -18,6 +18,10 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+
+
 int main(void)
 {
 	GLFWwindow* window;
@@ -99,6 +103,9 @@ int main(void)
 		shader.Unbind();
 
 		Renderer renderer;
+
+		ImGui::CreateContext();
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
 
 		float r = 0.0f;
 		float increment = 0.05f;
