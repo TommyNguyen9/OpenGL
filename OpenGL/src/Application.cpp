@@ -24,6 +24,7 @@
 
 
 
+
 int main(void)
 {
 	GLFWwindow* window;
@@ -107,7 +108,11 @@ int main(void)
 		Renderer renderer;
 
 		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init("#version 330");
+
 		ImGui::StyleColorsDark();
 
 		bool show_demo_window = true;
@@ -121,10 +126,14 @@ int main(void)
 		/* Loop until user closes the window */
 		while (!glfwWindowShouldClose(window))
 		{
+			glfwPollEvents();
+
 			/* Render here */
 			renderer.Clear();
 
+			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
 
 			shader.Bind();
 			shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
@@ -137,6 +146,12 @@ int main(void)
 				increment = 0.05f;
 
 			r += increment;
+
+
+        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+        if (show_demo_window)
+            ImGui::ShowDemoWindow(&show_demo_window);
+
 
 			{
 				static float f = 0.0f;
@@ -156,7 +171,7 @@ int main(void)
 				ImGui::SameLine();
 				ImGui::Text("counter = %d", counter);
 
-				//ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 				ImGui::End();
 			}
 
