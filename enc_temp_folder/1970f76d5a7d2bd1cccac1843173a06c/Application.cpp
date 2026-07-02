@@ -61,6 +61,35 @@ int main(void)
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		GLCall(glEnable(GL_BLEND));
 
+		//VertexArray va;
+		//VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+
+		//VertexBufferLayout layout;
+		//layout.Push<float>(2);
+		//layout.Push<float>(2);
+		//va.AddBuffer(vb, layout);
+
+		//IndexBuffer ib(indices, 6);
+
+		//glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+		//glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+
+		//Shader shader("res/shaders/Basic.shader");
+		//shader.Bind();
+		//shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+	
+
+		//std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
+
+		//Texture texture("../res/textures/Cherno.png");
+		//texture.Bind();
+		//shader.SetUniform1i("u_Texture", 0);
+
+		//va.Unbind();
+		//vb.Unbind();
+		//ib.Unbind();
+		//shader.Unbind();
+
 		Renderer renderer;
 
 		ImGui::CreateContext();
