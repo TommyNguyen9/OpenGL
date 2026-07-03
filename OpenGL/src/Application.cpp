@@ -26,6 +26,7 @@
 
 
 
+
 int main(void)
 {
 	GLFWwindow* window;
@@ -70,30 +71,40 @@ int main(void)
 		ImGui_ImplOpenGL3_Init("#version 330");
 
 		test::Test* currentTest = nullptr;
-		test::TestMenu* menu = new test::TestMenu(currentTest);
-		currentTest = menu;
+		test::TestMenu* testMenu = new test::TestMenu(currentTest);
+		currentTest = testMenu;
 
-		test::TestClearColor test;
+		testMenu->RegisterTest<test::TestClearColor>("Clear Color");
+
 
 	
 		/* Loop until user closes the window */
 		while (!glfwWindowShouldClose(window))
 		{
 			glfwPollEvents();
-
+			GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 			/* Render here */
 			renderer.Clear();
 
-			test.OnUpdate(0.0f);
-			test.OnRender();
-
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
-		
 			ImGui::NewFrame();
-			test.OnImGuiRender();
-			
-
+			if (currentTest)
+			{
+				currentTest->OnUpdate(0.0f);
+				currentTest->OnRender();
+				ImGui::Begin("Test");
+				if (currentTest != testMenu && ImGui::Button("<-"))
+				{
+					delete currentTest;
+					currentTest = testMenu;
+				}
+				currentTest->OnImGuiRender();
+				ImGui::End();
+			}
+		
+		
+	
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
