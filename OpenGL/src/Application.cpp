@@ -114,8 +114,12 @@ int main(void)
 			/* Poll for & process events */
 			glfwPollEvents();
 		}
-
+		delete currentTest;
+		if (currentTest != testMenu)
+			delete testMenu;
 	}
+
+	
 
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
