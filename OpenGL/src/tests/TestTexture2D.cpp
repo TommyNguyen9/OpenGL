@@ -11,7 +11,9 @@
 namespace test {
 
 	TestTexture2D::TestTexture2D()
-		: m_TranslationA(200, 200, 0), m_TranslationB(400, 200, 0)
+		: m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)), 
+		m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))), 
+		m_TranslationA(200, 200, 0), m_TranslationB(400, 200, 0)
 		
 	{
 	
@@ -31,18 +33,16 @@ namespace test {
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 		GLCall(glEnable(GL_BLEND));
 
-		m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
 		m_VAO = std::make_unique<VertexArray>();
-		VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+		m_VertexBuffer = std::make_unique<VertexBuffer>(positions, 4 * 4 * sizeof(float));
 		VertexBufferLayout layout;
 		layout.Push<float>(2);
 		layout.Push<float>(2);
 
-		m_VAO->AddBuffer(vb, layout);
+		m_VAO->AddBuffer(*m_VertexBuffer, layout);
 		m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
 
-		m_Proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-		m_View = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+		m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
 		m_Shader->Bind();
 		m_Shader->SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 		m_Texture = std::make_unique<Texture>("../res/textures/Cherno.png");
